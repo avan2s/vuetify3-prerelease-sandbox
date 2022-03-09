@@ -23,6 +23,7 @@
                 <th>Name</th>
                 <th>Brand</th>
                 <th class="text-left">Power (PS)</th>
+                <th class="text-left">Note</th>
               </tr>
             </thead>
             <tbody>
@@ -34,6 +35,12 @@
                 <td class="text-left">{{ item.name }}</td>
                 <td class="text-left">{{ item.brand }}</td>
                 <td class="text-left">{{ item.power }}</td>
+                <td class="text-left">
+                  <v-text-field
+                    v-if="item.name === 'A4 Avant'"
+                    v-model="item.note"
+                  ></v-text-field>
+                </td>
               </tr>
             </tbody>
           </template>
