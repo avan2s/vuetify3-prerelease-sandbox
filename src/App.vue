@@ -12,20 +12,20 @@
           v-model="carFilter.selectedBrand"
           v-on:select="onElementClick('select')"
         ></v-select>
-        <v-btn>Search</v-btn>
-
+        <v-btn v-on:click="search()">Search</v-btn>
+        <v-btn v-on:click="clearFilter()">Clear Filter</v-btn>
         <v-table>
           <template v-slot:default>
             <thead>
               <tr>
                 <th>Name</th>
                 <th>Brand</th>
-                <th class="text-center">Power (PS)</th>
+                <th class="text-left">Power (PS)</th>
               </tr>
             </thead>
             <tbody>
               <tr
-                v-for="item in desserts"
+                v-for="item in cars"
                 :key="item.name"
                 v-on:click="onElementClick('row')"
               >
@@ -44,6 +44,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
+import { CARS } from "./model/cars";
 
 export default defineComponent({
   name: "App",
@@ -55,57 +56,31 @@ export default defineComponent({
   data() {
     return {
       selectItems: ["Audi", "BMW", "Ferrari", "Mercedes"],
-      desserts: [
-        {
-          name: "A4 Avant",
-          brand: "Audi",
-          power: 200,
-        },
-        {
-          name: "Q7 4M",
-          brand: "Audi",
-          power: 400,
-        },
-        {
-          name: "M140i",
-          brand: "BMW",
-          power: 272,
-        },
-        {
-          name: "M3e46",
-          brand: "BMW",
-          power: 305,
-        },
-        {
-          name: "F40",
-          brand: "Ferrari",
-          power: 600,
-        },
-        {
-          name: "Ferrari 512 BB",
-          brand: "Ferrari",
-          power: 500,
-        },
-        {
-          name: "Mercedes Benz A 180",
-          brand: "Mercedes",
-          power: 116,
-        },
-        {
-          name: "Mercedes-Benz E-Klasse Mercedes-AMG",
-          brand: "Mercedes",
-          power: 435,
-        },
-      ],
+      cars: [],
       carFilter: {
         selectedBrand: "Audi",
       },
     };
   },
 
+  created() {
+    CARS.forEach((car) => this.cars.push(car));
+  },
+
   methods: {
-    onElementClick(clickedElement) {
+    onElementClick(clickedElement: string): void {
       console.log("clicked on " + clickedElement);
+    },
+    search(): void {
+      this.cars = [];
+      CARS.forEach((car) => this.cars.push(car));
+      this.cars = this.cars.filter(
+        (car) => car.brand === this.carFilter.selectedBrand
+      );
+    },
+    clearFilter(): void {
+      this.cars = [];
+      CARS.forEach((car) => this.cars.push(car));
     },
   },
 });
