@@ -9,7 +9,9 @@
         <v-select
           :items="selectItems"
           label="Brand"
-          v-model="carFilter.selectedBrand"
+          :multiple="true"
+          :chips="true"
+          v-model="carFilter.selectedBrands"
           v-on:select="onElementClick('select')"
         ></v-select>
         <v-btn v-on:click="search()">Search</v-btn>
@@ -76,13 +78,14 @@ export default defineComponent({
       page: 1,
       pageCount: 5,
       carFilter: {
-        selectedBrand: "Audi",
+        selectedBrands: [],
       },
     };
   },
 
   created() {
     CARS.forEach((car) => this.cars.push(car));
+    this.selectItems.forEach((i) => this.carFilter.selectedBrands.push(i));
   },
 
   methods: {
@@ -92,8 +95,8 @@ export default defineComponent({
     search(): void {
       this.cars = [];
       CARS.forEach((car) => this.cars.push(car));
-      this.cars = this.cars.filter(
-        (car) => car.brand === this.carFilter.selectedBrand
+      this.cars = this.cars.filter((car) =>
+        this.carFilter.selectedBrands.includes(car.brand)
       );
     },
     clearFilter(): void {
