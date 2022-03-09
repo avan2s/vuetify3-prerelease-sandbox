@@ -35,7 +35,23 @@
               </tr>
             </tbody>
           </template>
+          <template v-slot:footer>sdsd</template>
         </v-table>
+        <div class="text-center">
+          <v-container>
+            <v-row justify="center">
+              <v-col cols="8">
+                <v-container class="max-width">
+                  <v-pagination
+                    v-model="page"
+                    class="my-4"
+                    :length="pageCount"
+                  ></v-pagination>
+                </v-container>
+              </v-col>
+            </v-row>
+          </v-container>
+        </div>
       </v-container>
     </v-main>
   </v-app>
@@ -57,6 +73,8 @@ export default defineComponent({
     return {
       selectItems: ["Audi", "BMW", "Ferrari", "Mercedes"],
       cars: [],
+      page: 1,
+      pageCount: 5,
       carFilter: {
         selectedBrand: "Audi",
       },
