@@ -61,6 +61,30 @@
             </v-row>
           </v-container>
         </div>
+
+        <h1>Statusverlauf</h1>
+        <v-timeline :direction="'vertical'" single-side="after">
+          <v-timeline-item
+            size="small"
+            align-dot="start"
+            color="teal-lighten-3"
+          >
+            <strong>Eingegangen</strong>
+            <div class="text-caption mb-2">Hangouts</div>
+          </v-timeline-item>
+          <v-timeline-item size="small">
+            <strong>Angelegt</strong>
+            <div class="text-caption mb-2">Hangouts</div>
+          </v-timeline-item>
+          <v-timeline-item size="small">
+            <strong>Gepackt</strong>
+            <div class="text-caption mb-2">Hangouts</div>
+          </v-timeline-item>
+          <v-timeline-item size="small"
+            ><strong>Erledigt</strong>
+            <div class="text-caption mb-2">Hangouts</div></v-timeline-item
+          >
+        </v-timeline>
       </v-container>
     </v-main>
   </v-app>
