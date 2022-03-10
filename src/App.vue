@@ -63,27 +63,83 @@
         </div>
 
         <h1>Statusverlauf</h1>
-        <v-timeline :direction="'vertical'" single-side="after">
-          <v-timeline-item
-            size="small"
-            align-dot="start"
-            color="teal-lighten-3"
-          >
+        <v-timeline :direction="'vertical'" side="start">
+          <v-timeline-item align-dot="start" color="teal-lighten-3">
             <strong>Eingegangen</strong>
             <div class="text-caption mb-2">Hangouts</div>
           </v-timeline-item>
-          <v-timeline-item size="small">
+          <v-timeline-item>
             <strong>Angelegt</strong>
             <div class="text-caption mb-2">Hangouts</div>
           </v-timeline-item>
-          <v-timeline-item size="small">
+          <v-timeline-item>
             <strong>Gepackt</strong>
             <div class="text-caption mb-2">Hangouts</div>
           </v-timeline-item>
-          <v-timeline-item size="small"
+          <v-timeline-item
             ><strong>Erledigt</strong>
             <div class="text-caption mb-2">Hangouts</div></v-timeline-item
           >
+        </v-timeline>
+        <h1>Timeline with icons</h1>
+        <v-timeline>
+          <v-timeline-item size="large">
+            <template v-slot:icon>
+              <v-avatar>
+                <img src="https://i.pravatar.cc/64" />
+              </v-avatar>
+            </template>
+            <template v-slot:opposite>
+              <span>Tus eu perfecto</span>
+            </template>
+            <v-card class="elevation-2">
+              <v-card-title class="text-h5"> Lorem ipsum </v-card-title>
+              <v-card-text
+                >Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
+                scaevola imperdiet nec ut, sed euismod convenire principes at.
+                Est et nobis iisque percipit, an vim zril disputando
+                voluptatibus, vix an salutandi sententiae.</v-card-text
+              >
+            </v-card>
+          </v-timeline-item>
+          <v-timeline-item size="large">
+            <template v-slot:icon>
+              <v-avatar>
+                <img src="https://i.pravatar.cc/63" />
+              </v-avatar>
+            </template>
+            <template v-slot:opposite>
+              <span>Tus eu perfecto</span>
+            </template>
+            <v-card class="elevation-2">
+              <v-card-title class="text-h5"> Lorem ipsum </v-card-title>
+              <v-card-text
+                >Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
+                scaevola imperdiet nec ut, sed euismod convenire principes at.
+                Est et nobis iisque percipit, an vim zril disputando
+                voluptatibus, vix an salutandi sententiae.</v-card-text
+              >
+            </v-card>
+          </v-timeline-item>
+          <v-timeline-item size="large">
+            <template v-slot:icon>
+              <v-avatar>
+                <img src="https://i.pravatar.cc/62" />
+              </v-avatar>
+            </template>
+            <template v-slot:opposite>
+              <span>Tus eu perfecto</span>
+            </template>
+            <v-card class="elevation-2">
+              <v-card-title class="text-h5"> Lorem ipsum </v-card-title>
+              <v-card-text
+                >Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
+                scaevola imperdiet nec ut, sed euismod convenire principes at.
+                Est et nobis iisque percipit, an vim zril disputando
+                voluptatibus, vix an salutandi sententiae.</v-card-text
+              >
+            </v-card>
+          </v-timeline-item>
         </v-timeline>
       </v-container>
     </v-main>
