@@ -6,6 +6,11 @@
         <v-navigation-drawer app>
           <h1>Somesidebar</h1>
         </v-navigation-drawer>
+        <v-text-field
+          v-model="carFilter.name"
+          label="Name"
+          @keyup="search()"
+        ></v-text-field>
         <v-select
           :items="selectItems"
           label="Brand"
@@ -20,7 +25,10 @@
           <template v-slot:default>
             <thead>
               <tr>
-                <th>Name</th>
+                <th>
+                  <span>Name</span>
+                  <span><v-icon large> mdi mdi-arrow-up </v-icon></span>
+                </th>
                 <th>Brand</th>
                 <th class="text-left">Power (PS)</th>
                 <th class="text-left">Note</th>
@@ -166,6 +174,7 @@ export default defineComponent({
       pageCount: 5,
       carFilter: {
         selectedBrands: [],
+        name: "",
       },
     };
   },
@@ -182,13 +191,23 @@ export default defineComponent({
     search(): void {
       this.cars = [];
       CARS.forEach((car) => this.cars.push(car));
-      this.cars = this.cars.filter((car) =>
-        this.carFilter.selectedBrands.includes(car.brand)
-      );
+      this.cars = this.cars.filter((car) => {
+        let isMatching = this.carFilter.selectedBrands.includes(car.brand);
+        this.carFilter.name = this.carFilter.name ? this.carFilter.name : "";
+        isMatching =
+          isMatching &&
+          car.name
+            .toLowerCase()
+            .indexOf(this.carFilter.name.trim().toLowerCase()) > -1;
+        return isMatching;
+      });
     },
     clearFilter(): void {
       this.cars = [];
       CARS.forEach((car) => this.cars.push(car));
+      this.carFilter.name = null;
+      this.carFilter.selectedBrands = [];
+      this.selectItems.forEach((i) => this.carFilter.selectedBrands.push(i));
     },
   },
 });
