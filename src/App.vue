@@ -5,7 +5,7 @@
         <v-list-item
           prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
           title="Maximilian Mustermann"
-          subtitle="sandra_a88@gmailcom"
+          subtitle="maximilian_mustermann88@gmail.com"
         ></v-list-item>
         <v-divider></v-divider>
         <v-list density="compact" nav>
@@ -69,7 +69,17 @@
               >
                 <td class="text-left">{{ item.name }}</td>
                 <td class="text-left">{{ item.brand }}</td>
-                <td class="text-left">{{ item.power }}</td>
+                <td class="text-left">
+                  <v-chip
+                    v-if="item.power > 300"
+                    class="ma-2"
+                    color="red"
+                    text-color="white"
+                  >
+                    {{ item.power }}
+                  </v-chip>
+                  <v-chip v-else class="ma-2"> {{ item.power }}</v-chip>
+                </td>
                 <td class="text-left">
                   <v-text-field
                     v-if="item.name === 'A4 Avant'"
@@ -79,7 +89,13 @@
                     {{ item.note }}
                   </div>
                 </td>
-                <td class="text-left"></td>
+                <td class="text-left">
+                  <span
+                    ><v-icon large color="green darken-2">
+                      mdi-check
+                    </v-icon></span
+                  >
+                </td>
               </tr>
             </tbody>
           </template>
@@ -101,8 +117,13 @@
           </v-container>
         </div>
 
+        <v-expansion-panels>
+          <v-expansion-panel title="Statusverlauf" text="adfsddfsdfdsdsfsdfds">
+          </v-expansion-panel>
+        </v-expansion-panels>
+
         <h1>Statusverlauf</h1>
-        <v-timeline :direction="'vertical'" side="start">
+        <v-timeline :direction="'horizontal'" side="start">
           <v-timeline-item align-dot="start" color="teal-lighten-3">
             <strong>Eingegangen</strong>
             <div class="text-caption mb-2">Hangouts</div>
