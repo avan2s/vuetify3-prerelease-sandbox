@@ -1,11 +1,35 @@
 <template>
   <v-app>
+    <v-navigation-drawer expand-on-hover rail app>
+      <v-list>
+        <v-list-item
+          prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+          title="Maximilian Mustermann"
+          subtitle="sandra_a88@gmailcom"
+        ></v-list-item>
+        <v-divider></v-divider>
+        <v-list density="compact" nav>
+          <v-list-item
+            prepend-icon="mdi-folder"
+            title="My Files"
+            value="myfiles"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-account-multiple"
+            title="Shared with me"
+            value="shared"
+          ></v-list-item>
+          <v-list-item
+            prepend-icon="mdi-star"
+            title="Starred"
+            value="starred"
+          ></v-list-item>
+        </v-list>
+      </v-list>
+    </v-navigation-drawer>
     <v-main>
       <h1>Lets drive a car</h1>
       <v-container>
-        <v-navigation-drawer app>
-          <h1>Somesidebar</h1>
-        </v-navigation-drawer>
         <v-text-field
           v-model="carFilter.name"
           label="Name"
@@ -19,19 +43,22 @@
           v-model="carFilter.selectedBrands"
           v-on:select="onElementClick('select')"
         ></v-select>
-        <v-btn v-on:click="search()">Search</v-btn>
-        <v-btn v-on:click="clearFilter()">Clear Filter</v-btn>
+        <v-btn color="primary" v-on:click="search()">Search</v-btn>
+        <v-btn color="secondary" v-on:click="clearFilter()">Reset Filter</v-btn>
         <v-table>
           <template v-slot:default>
             <thead>
               <tr>
                 <th>
                   <span>Name</span>
-                  <span><v-icon large> mdi mdi-arrow-up </v-icon></span>
+                  <span>
+                    <v-icon large>mdi mdi-arrow-up</v-icon>
+                  </span>
                 </th>
                 <th>Brand</th>
                 <th class="text-left">Power (PS)</th>
                 <th class="text-left">Note</th>
+                <th class="text-left">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -48,7 +75,11 @@
                     v-if="item.name === 'A4 Avant'"
                     v-model="item.note"
                   ></v-text-field>
+                  <div v-else>
+                    {{ item.note }}
+                  </div>
                 </td>
+                <td class="text-left"></td>
               </tr>
             </tbody>
           </template>
@@ -76,18 +107,18 @@
             <strong>Eingegangen</strong>
             <div class="text-caption mb-2">Hangouts</div>
           </v-timeline-item>
-          <v-timeline-item>
+          <v-timeline-item dot-color="green">
             <strong>Angelegt</strong>
             <div class="text-caption mb-2">Hangouts</div>
           </v-timeline-item>
-          <v-timeline-item>
+          <v-timeline-item dot-color="yellow">
             <strong>Gepackt</strong>
             <div class="text-caption mb-2">Hangouts</div>
           </v-timeline-item>
-          <v-timeline-item
-            ><strong>Erledigt</strong>
-            <div class="text-caption mb-2">Hangouts</div></v-timeline-item
-          >
+          <v-timeline-item dot-color="blue">
+            <strong>Erledigt</strong>
+            <div class="text-caption mb-2">Hangouts</div>
+          </v-timeline-item>
         </v-timeline>
         <h1>Timeline with icons</h1>
         <v-timeline>
@@ -101,13 +132,13 @@
               <span>Tus eu perfecto</span>
             </template>
             <v-card class="elevation-2">
-              <v-card-title class="text-h5"> Lorem ipsum </v-card-title>
-              <v-card-text
-                >Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
+              <v-card-title class="text-h5">Lorem ipsum</v-card-title>
+              <v-card-text>
+                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
                 scaevola imperdiet nec ut, sed euismod convenire principes at.
                 Est et nobis iisque percipit, an vim zril disputando
-                voluptatibus, vix an salutandi sententiae.</v-card-text
-              >
+                voluptatibus, vix an salutandi sententiae.
+              </v-card-text>
             </v-card>
           </v-timeline-item>
           <v-timeline-item size="large">
@@ -120,13 +151,13 @@
               <span>Tus eu perfecto</span>
             </template>
             <v-card class="elevation-2">
-              <v-card-title class="text-h5"> Lorem ipsum </v-card-title>
-              <v-card-text
-                >Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
+              <v-card-title class="text-h5">Lorem ipsum</v-card-title>
+              <v-card-text>
+                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
                 scaevola imperdiet nec ut, sed euismod convenire principes at.
                 Est et nobis iisque percipit, an vim zril disputando
-                voluptatibus, vix an salutandi sententiae.</v-card-text
-              >
+                voluptatibus, vix an salutandi sententiae.
+              </v-card-text>
             </v-card>
           </v-timeline-item>
           <v-timeline-item size="large">
@@ -139,13 +170,13 @@
               <span>Tus eu perfecto</span>
             </template>
             <v-card class="elevation-2">
-              <v-card-title class="text-h5"> Lorem ipsum </v-card-title>
-              <v-card-text
-                >Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
+              <v-card-title class="text-h5">Lorem ipsum</v-card-title>
+              <v-card-text>
+                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
                 scaevola imperdiet nec ut, sed euismod convenire principes at.
                 Est et nobis iisque percipit, an vim zril disputando
-                voluptatibus, vix an salutandi sententiae.</v-card-text
-              >
+                voluptatibus, vix an askdfjsdifdj sententiae.
+              </v-card-text>
             </v-card>
           </v-timeline-item>
         </v-timeline>

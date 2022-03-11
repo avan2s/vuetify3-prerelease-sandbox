@@ -14,6 +14,7 @@ export const CARS = [
     name: "Q7 4M",
     brand: "Audi",
     power: 400,
+    note: "Here we should check somsething",
   },
   {
     name: "M140i",
@@ -34,6 +35,7 @@ export const CARS = [
     name: "Ferrari 512 BB",
     brand: "Ferrari",
     power: 500,
+    note: "This is a monster",
   },
   {
     name: "Mercedes Benz A 180",
