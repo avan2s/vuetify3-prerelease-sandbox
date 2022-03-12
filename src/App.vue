@@ -6,25 +6,24 @@
     <v-main>
       <h1>Lets drive a car</h1>
       <car-table></car-table>
+      <h1>Statusverlauf Parent</h1>
+      <v-timeline :direction="'horizontal'" density="compact">
+        <v-timeline-item
+          v-for="(state, stateIndex) in states"
+          :key="stateIndex"
+          align-dot="start"
+          :dot-color="state.color"
+        >
+          <strong>{{ state.name }}</strong>
+          <div class="text-caption mb-2">Hangouts</div>
+        </v-timeline-item>
+      </v-timeline>
       <v-container>
         <status-timeline
           title="Statusverlauf as child Own component"
           direction="horizontal"
           :states="states"
         ></status-timeline>
-
-        <h1>Statusverlauf Parent</h1>
-        <v-timeline :direction="'horizontal'" density="compact">
-          <v-timeline-item
-            v-for="(state, stateIndex) in states"
-            :key="stateIndex"
-            align-dot="start"
-            :dot-color="state.color"
-          >
-            <strong>{{ state.name }}</strong>
-            <div class="text-caption mb-2">Hangouts</div>
-          </v-timeline-item>
-        </v-timeline>
       </v-container>
     </v-main>
   </v-app>

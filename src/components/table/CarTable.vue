@@ -82,12 +82,19 @@
   </div>
 </template>
 <script setup lang="ts">
+import type { Car } from "@/interfaces/car.interface";
 import { CARS } from "@/model/cars";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, type Ref } from "vue";
 
-const cars = ref([]);
+const cars: Ref<Car[]> = ref([]);
 
-const carFilter = reactive({
+interface CarFilter {
+  selectedBrands: string[];
+  selectableBrands: string[];
+  name?: string;
+}
+
+const carFilter: CarFilter = reactive({
   selectedBrands: [],
   selectableBrands: ["Audi", "BMW", "Ferrari", "Mercedes"],
   name: "",
