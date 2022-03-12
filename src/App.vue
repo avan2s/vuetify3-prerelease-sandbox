@@ -36,15 +36,15 @@
           @keyup="search()"
         ></v-text-field>
         <v-select
-          :items="selectItems"
+          :items="carFilter.selectableBrands"
           label="Brand"
           :multiple="true"
           :chips="true"
           v-model="carFilter.selectedBrands"
-          v-on:select="onElementClick('select')"
+          @select="onElementClick('select')"
         ></v-select>
-        <v-btn color="primary" v-on:click="search()">Search</v-btn>
-        <v-btn color="secondary" v-on:click="clearFilter()">Reset Filter</v-btn>
+        <v-btn color="primary" @click="search()">Search</v-btn>
+        <v-btn color="secondary" @click="clearFilter()">Reset Filter</v-btn>
         <v-table>
           <template v-slot:default>
             <thead>
@@ -65,7 +65,7 @@
               <tr
                 v-for="item in cars"
                 :key="item.name"
-                v-on:click="onElementClick('row')"
+                @click="onElementClick('row')"
               >
                 <td class="text-left">{{ item.name }}</td>
                 <td class="text-left">{{ item.brand }}</td>
@@ -206,61 +206,47 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+<script lang="ts" setup>
+import { onMounted, reactive, ref } from "vue";
 import { CARS } from "./model/cars";
 
-export default defineComponent({
-  name: "App",
-
-  components: {
-    HelloWorld,
-  },
-
-  data() {
-    return {
-      selectItems: ["Audi", "BMW", "Ferrari", "Mercedes"],
-      cars: [],
-      page: 1,
-      pageCount: 5,
-      carFilter: {
-        selectedBrands: [],
-        name: "",
-      },
-    };
-  },
-
-  created() {
-    CARS.forEach((car) => this.cars.push(car));
-    this.selectItems.forEach((i) => this.carFilter.selectedBrands.push(i));
-  },
-
-  methods: {
-    onElementClick(clickedElement: string): void {
-      console.log("clicked on " + clickedElement);
-    },
-    search(): void {
-      this.cars = [];
-      CARS.forEach((car) => this.cars.push(car));
-      this.cars = this.cars.filter((car) => {
-        let isMatching = this.carFilter.selectedBrands.includes(car.brand);
-        this.carFilter.name = this.carFilter.name ? this.carFilter.name : "";
-        isMatching =
-          isMatching &&
-          car.name
-            .toLowerCase()
-            .indexOf(this.carFilter.name.trim().toLowerCase()) > -1;
-        return isMatching;
-      });
-    },
-    clearFilter(): void {
-      this.cars = [];
-      CARS.forEach((car) => this.cars.push(car));
-      this.carFilter.name = null;
-      this.carFilter.selectedBrands = [];
-      this.selectItems.forEach((i) => this.carFilter.selectedBrands.push(i));
-    },
-  },
+const cars = ref([]);
+const carFilter = reactive({
+  selectedBrands: [],
+  selectableBrands: ["Audi", "BMW", "Ferrari", "Mercedes"],
+  name: "",
 });
+
+const search = () => {
+  cars.value = [];
+  CARS.forEach((car) => cars.value.push(car));
+  cars.value = cars.value.filter((car) => {
+    let isMatching = carFilter.selectedBrands.includes(car.brand);
+    carFilter.name = carFilter.name ? carFilter.name : "";
+    isMatching =
+      isMatching &&
+      car.name.toLowerCase().indexOf(carFilter.name.trim().toLowerCase()) > -1;
+    return isMatching;
+  });
+};
+
+const clearFilter = () => {
+  cars.value = [];
+  CARS.forEach((car) => cars.value.push(car));
+  carFilter.name = "";
+  carFilter.selectedBrands = [];
+  carFilter.selectableBrands.forEach((i) => carFilter.selectedBrands.push(i));
+};
+
+onMounted(() => {
+  CARS.forEach((car) => cars.value.push(car));
+  carFilter.selectableBrands.forEach((i) => carFilter.selectedBrands.push(i));
+});
+
+const page = ref(1);
+const pageCount = ref(5);
+
+const onElementClick = (elementName: string) => {
+  console.log("clicked on " + elementName);
+};
 </script>
