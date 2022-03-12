@@ -1,7 +1,29 @@
+<template>
+  <h1>Statusverlauf</h1>
+  <v-timeline :direction="'horizontal'" side="start">
+    <v-timeline-item align-dot="start" color="teal-lighten-3">
+      <strong>Eingegangen</strong>
+      <div class="text-caption mb-2">Hangouts</div>
+    </v-timeline-item>
+    <v-timeline-item dot-color="green">
+      <strong>Angelegt</strong>
+      <div class="text-caption mb-2">Hangouts</div>
+    </v-timeline-item>
+    <v-timeline-item dot-color="yellow">
+      <strong>Gepackt</strong>
+      <div class="text-caption mb-2">Hangouts</div>
+    </v-timeline-item>
+    <v-timeline-item dot-color="blue">
+      <strong>Erledigt</strong>
+      <div class="text-caption mb-2">Hangouts</div>
+    </v-timeline-item>
+  </v-timeline>
+</template>
 <script setup lang="ts">
-import WelcomeItem from "./MyTimelineItem.vue";
+const props = defineProps(["title"]);
 </script>
 
+<!---
 <template>
   <WelcomeItem>
     <template #icon> </template>
@@ -75,4 +97,4 @@ import WelcomeItem from "./MyTimelineItem.vue";
     sustainability. You can help us by
     <a target="_blank" href="https://vuejs.org/sponsor/">becoming a sponsor</a>.
   </WelcomeItem>
-</template>
+</template>-->

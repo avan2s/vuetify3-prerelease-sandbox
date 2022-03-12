@@ -63,8 +63,8 @@
             </thead>
             <tbody>
               <tr
-                v-for="item in cars"
-                :key="item.name"
+                v-for="(item, carIndex) in cars"
+                :key="carIndex"
                 @click="onElementClick('row')"
               >
                 <td class="text-left">{{ item.name }}</td>
@@ -75,26 +75,21 @@
                     class="ma-2"
                     color="red"
                     text-color="white"
+                    >{{ item.power }}</v-chip
                   >
-                    {{ item.power }}
-                  </v-chip>
-                  <v-chip v-else class="ma-2"> {{ item.power }}</v-chip>
+                  <v-chip v-else class="ma-2">{{ item.power }}</v-chip>
                 </td>
                 <td class="text-left">
                   <v-text-field
                     v-if="item.name === 'A4 Avant'"
                     v-model="item.note"
                   ></v-text-field>
-                  <div v-else>
-                    {{ item.note }}
-                  </div>
+                  <div v-else>{{ item.note }}</div>
                 </td>
                 <td class="text-left">
-                  <span
-                    ><v-icon large color="green darken-2">
-                      mdi-check
-                    </v-icon></span
-                  >
+                  <span>
+                    <v-icon large color="green darken-2">mdi-check</v-icon>
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -116,91 +111,25 @@
             </v-row>
           </v-container>
         </div>
+        <status-timeline
+          title="Statusverlauf"
+          direction="horizontal"
+          :states="states"
+        ></status-timeline>
+        <!-- <my-timeline title="Statusverlauf"> </my-timeline> -->
 
-        <v-expansion-panels>
-          <v-expansion-panel title="Statusverlauf" text="adfsddfsdfdsdsfsdfds">
-          </v-expansion-panel>
-        </v-expansion-panels>
-
-        <h1>Statusverlauf</h1>
-        <v-timeline :direction="'horizontal'" side="start">
-          <v-timeline-item align-dot="start" color="teal-lighten-3">
-            <strong>Eingegangen</strong>
+        <!-- <h1>Statusverlauf</h1>
+        <v-timeline :direction="'horizontal'" density="compact">
+          <v-timeline-item
+            v-for="(state, stateIndex) in states"
+            :key="stateIndex"
+            align-dot="start"
+            :dot-color="state.color"
+          >
+            <strong>{{ state.name }}</strong>
             <div class="text-caption mb-2">Hangouts</div>
           </v-timeline-item>
-          <v-timeline-item dot-color="green">
-            <strong>Angelegt</strong>
-            <div class="text-caption mb-2">Hangouts</div>
-          </v-timeline-item>
-          <v-timeline-item dot-color="yellow">
-            <strong>Gepackt</strong>
-            <div class="text-caption mb-2">Hangouts</div>
-          </v-timeline-item>
-          <v-timeline-item dot-color="blue">
-            <strong>Erledigt</strong>
-            <div class="text-caption mb-2">Hangouts</div>
-          </v-timeline-item>
-        </v-timeline>
-        <h1>Timeline with icons</h1>
-        <v-timeline>
-          <v-timeline-item size="large">
-            <template v-slot:icon>
-              <v-avatar>
-                <img src="https://i.pravatar.cc/64" />
-              </v-avatar>
-            </template>
-            <template v-slot:opposite>
-              <span>Tus eu perfecto</span>
-            </template>
-            <v-card class="elevation-2">
-              <v-card-title class="text-h5">Lorem ipsum</v-card-title>
-              <v-card-text>
-                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
-                scaevola imperdiet nec ut, sed euismod convenire principes at.
-                Est et nobis iisque percipit, an vim zril disputando
-                voluptatibus, vix an salutandi sententiae.
-              </v-card-text>
-            </v-card>
-          </v-timeline-item>
-          <v-timeline-item size="large">
-            <template v-slot:icon>
-              <v-avatar>
-                <img src="https://i.pravatar.cc/63" />
-              </v-avatar>
-            </template>
-            <template v-slot:opposite>
-              <span>Tus eu perfecto</span>
-            </template>
-            <v-card class="elevation-2">
-              <v-card-title class="text-h5">Lorem ipsum</v-card-title>
-              <v-card-text>
-                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
-                scaevola imperdiet nec ut, sed euismod convenire principes at.
-                Est et nobis iisque percipit, an vim zril disputando
-                voluptatibus, vix an salutandi sententiae.
-              </v-card-text>
-            </v-card>
-          </v-timeline-item>
-          <v-timeline-item size="large">
-            <template v-slot:icon>
-              <v-avatar>
-                <img src="https://i.pravatar.cc/62" />
-              </v-avatar>
-            </template>
-            <template v-slot:opposite>
-              <span>Tus eu perfecto</span>
-            </template>
-            <v-card class="elevation-2">
-              <v-card-title class="text-h5">Lorem ipsum</v-card-title>
-              <v-card-text>
-                Lorem ipsum dolor sit amet, no nam oblique veritus. Commune
-                scaevola imperdiet nec ut, sed euismod convenire principes at.
-                Est et nobis iisque percipit, an vim zril disputando
-                voluptatibus, vix an askdfjsdifdj sententiae.
-              </v-card-text>
-            </v-card>
-          </v-timeline-item>
-        </v-timeline>
+        </v-timeline> -->
       </v-container>
     </v-main>
   </v-app>
@@ -209,8 +138,13 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from "vue";
 import { CARS } from "./model/cars";
+import StatusTimeline from "./components/timeline/StatusTimeline.vue";
+import { MOCK_STATES } from "./model/mock-states.";
 
 const cars = ref([]);
+
+const states = ref(MOCK_STATES);
+
 const carFilter = reactive({
   selectedBrands: [],
   selectableBrands: ["Audi", "BMW", "Ferrari", "Mercedes"],
