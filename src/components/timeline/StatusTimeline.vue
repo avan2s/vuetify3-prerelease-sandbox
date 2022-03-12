@@ -21,9 +21,10 @@
   </v-main>
 </template>
 <script setup lang="ts">
+import type { State } from "../../interfaces/state.interface";
 defineProps<{
   title: string;
   direction: "horizontal" | "vertical";
-  states: object[];
+  states: State[];
 }>();
 </script>
