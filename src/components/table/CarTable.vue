@@ -57,7 +57,13 @@
           </td>
           <td class="text-left">
             <span>
+              <v-icon large color="black darken-2">mdi-note-plus</v-icon>
+            </span>
+            <span>
               <v-icon large color="green darken-2">mdi-check</v-icon>
+            </span>
+            <span>
+              <v-icon large color="red darken-2">mdi-close</v-icon>
             </span>
           </td>
         </tr>

@@ -1,6 +1,6 @@
 <template>
   <h1>Statusverlauf</h1>
-  <v-timeline :direction="'horizontal'" side="start">
+  <v-timeline :direction="'horizontal'" density="compact">
     <v-timeline-item align-dot="start" color="teal-lighten-3">
       <strong>Eingegangen</strong>
       <div class="text-caption mb-2">Hangouts</div>

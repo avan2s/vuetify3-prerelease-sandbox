@@ -1,42 +1,58 @@
 export const MOCK_STATES = [
   {
-    name: "State 1",
-    color: "black",
-  },
-  {
-    name: "State 2",
+    name: "Eingegangen",
     color: "green",
+    icon: "mdi-email-receive",
   },
   {
-    name: "State 3",
-    color: "blue",
+    name: "Angelegt",
+    color: "green",
+    icon: "mdi-text-box-plus",
   },
   {
-    name: "State 4",
-    color: "yellow",
+    name: "Gepackt",
+    color: "green",
+    icon: "mdi-package",
   },
   {
-    name: "State 5",
-    color: "red",
-  },
-  {
-    name: "State 6",
+    name: "Stornierung eingegangen",
     color: "orange",
+    icon: "mdi-file-cancel",
   },
   {
-    name: "State 7",
-    color: "yellow",
-  },
-  {
-    name: "State 8",
-    color: "green",
-  },
-  {
-    name: "State 9",
-    color: "blue",
-  },
-  {
-    name: "State 10",
+    name: "Stornierung abgelehnt",
     color: "red",
+    icon: "mdi-close",
+  },
+
+  {
+    name: "Versendet",
+    color: "green",
+    icon: "mdi-cube-send",
+  },
+  {
+    name: "Rechnung",
+    color: "green",
+    icon: "mdi-receipt",
+  },
+  {
+    name: "+",
+    color: "grey",
+    icon: "mdi-dots-horizontal",
+  },
+  {
+    name: "Retoure angemeldet",
+    color: "orange",
+    icon: "mdi-keyboard-return",
+  },
+  {
+    name: "Retoure akzeptiert",
+    color: "green",
+    icon: "mdi-keyboard-return",
+  },
+  {
+    name: "Geld zurückgebucht",
+    color: "green",
+    icon: "mdi-cash-refund",
   },
 ];
