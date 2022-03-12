@@ -4,4 +4,5 @@ export interface Car {
   power: number;
   brand: string;
   note?: string;
+  noteAddMode?: boolean;
 }

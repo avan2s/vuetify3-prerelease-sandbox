@@ -10,7 +10,6 @@
     :multiple="true"
     :chips="true"
     v-model="carFilter.selectedBrands"
-    @select="onElementClick('select')"
   ></v-select>
   <v-btn color="primary" @click="search()">Search</v-btn>
   <v-btn color="secondary" @click="clearFilter()">Reset Filter</v-btn>
@@ -31,14 +30,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="(item, carIndex) in cars"
-          :key="carIndex"
-          @click="onElementClick('row')"
-        >
-          <td class="text-left">{{ item.name }}</td>
-          <td class="text-left">{{ item.brand }}</td>
-          <td class="text-left">
+        <tr v-for="(item, carIndex) in cars" :key="carIndex">
+          <td class="text-left" @click="onElementClick(item.name)">
+            {{ item.name }}
+          </td>
+          <td class="text-left" @click="onElementClick(item.brand)">
+            {{ item.brand }}
+          </td>
+          <td class="text-left" @click="onElementClick(item.power + '')">
             <v-chip
               v-if="item.power > 300"
               class="ma-2"
@@ -48,22 +47,31 @@
             >
             <v-chip v-else class="ma-2">{{ item.power }}</v-chip>
           </td>
-          <td class="text-left">
+          <td class="text-left" @click="onNoteColumnClick(carIndex)">
             <v-text-field
-              v-if="item.name === 'A4 Avant'"
+              v-if="item.noteAddMode"
               v-model="item.note"
             ></v-text-field>
-            <div v-else>{{ item.note }}</div>
+            <div v-else>
+              {{ item.note }}
+            </div>
           </td>
           <td class="text-left">
             <span>
-              <v-icon large color="black darken-2">mdi-note-plus</v-icon>
+              <v-icon
+                large
+                color="black darken-2"
+                @click="onNoteColumnClick(carIndex)"
+                >mdi-note-plus</v-icon
+              >
             </span>
-            <span>
+            <span v-if="item.noteAddMode">
               <v-icon large color="green darken-2">mdi-check</v-icon>
             </span>
-            <span>
-              <v-icon large color="red darken-2">mdi-close</v-icon>
+            <span v-if="item.noteAddMode">
+              <v-icon large color="red darken-2" @click="onNoteCancel(carIndex)"
+                >mdi-close</v-icon
+              >
             </span>
           </td>
         </tr>
@@ -113,6 +121,14 @@ onMounted(() => {
 
 const onElementClick = (elementName: string) => {
   console.log("clicked on " + elementName);
+};
+
+const onNoteColumnClick = (carRowIndex: number) => {
+  cars.value[carRowIndex].noteAddMode = true;
+};
+
+const onNoteCancel = (carRowIndex: number) => {
+  cars.value[carRowIndex].noteAddMode = false;
 };
 
 const search = () => {
