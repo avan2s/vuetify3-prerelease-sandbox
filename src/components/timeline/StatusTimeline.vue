@@ -1,8 +1,12 @@
 <template>
-  <v-icon v-on:click="onStateClick(state)">mdi-cancel</v-icon>
   <v-main>
     <h1>{{ title }}</h1>
-    <v-timeline single-side="after" :direction="direction" :density="'compact'">
+    <v-timeline
+      single-side="after"
+      :direction="direction"
+      density="compact"
+      truncate-line="both"
+    >
       <v-timeline-item
         v-for="(state, stateIndex) in states"
         :key="stateIndex"
@@ -40,3 +44,9 @@ const onStateClick = (state: State) => {
   console.log("clicked on " + state.name);
 };
 </script>
+<style>
+div.v-timeline-divider__line {
+  background-color: black;
+  height: 3px !important;
+}
+</style>
