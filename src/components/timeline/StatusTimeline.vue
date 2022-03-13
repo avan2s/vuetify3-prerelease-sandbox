@@ -1,7 +1,6 @@
 <template>
   <v-main>
     <h1>{{ title }}</h1>
-    <!-- <v-btn @click="changeIcon()">ChangeIcon</v-btn> -->
     <v-timeline
       single-side="after"
       :direction="direction"
@@ -36,7 +35,7 @@
   </v-main>
 </template>
 <script setup lang="ts">
-import { computed, ref, toRefs } from "vue";
+import { computed, ref, toRefs, reactive } from "vue";
 import type { State } from "../../interfaces/state.interface";
 
 const props = defineProps<{
@@ -45,32 +44,39 @@ const props = defineProps<{
   states: State[];
 }>();
 
-const expandableState: State = {
+const expandableState = reactive<State>({
   name: "Mehr",
   color: "grey",
   icon: "mdi-dots-horizontal",
-};
+});
+
+// const expandableState: State = {
+//   name: "Mehr",
+//   color: "grey",
+//   icon: "mdi-dots-horizontal",
+// };
 
 const maxSize = ref(5);
 const expandableStatePosition = 2;
-const { states } = toRefs(props);
 
 const visibleStates = computed(() => {
-  if (states.value.length > maxSize.value) {
-    const fromStartToExpandableStates = states.value
+  if (props.states.length > maxSize.value) {
+    const fromStartToExpandableStates = props.states
       .slice(0, expandableStatePosition)
       .concat([expandableState]);
 
     const remainingStatesToShow =
       maxSize.value - fromStartToExpandableStates.length;
 
-    return fromStartToExpandableStates.concat(
-      states.value.slice(-remainingStatesToShow)
+    const x = fromStartToExpandableStates.concat(
+      props.states.slice(-remainingStatesToShow)
     );
+    console.log(x);
+    return x;
   } else {
-    console.log();
-    let x = states.value.slice(0, states.value.length);
-    console.log(x.map((i) => i.name + " => " + i.icon));
+    let x = props.states.slice(0, props.states.length);
+    // console.log(x.map((i) => i.name + " => " + i.icon));
+    console.log(x);
     return x;
   }
 });
