@@ -36,11 +36,6 @@ export const MOCK_STATES = [
     icon: "mdi-receipt",
   },
   {
-    name: "+",
-    color: "grey",
-    icon: "mdi-dots-horizontal",
-  },
-  {
     name: "Retoure angemeldet",
     color: "orange",
     icon: "mdi-keyboard-return",
