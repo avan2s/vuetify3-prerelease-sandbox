@@ -1,100 +1,96 @@
 <template>
-  <h1>Statusverlauf</h1>
-  <v-timeline :direction="'horizontal'" density="compact">
-    <v-timeline-item align-dot="start" color="teal-lighten-3">
-      <strong>Eingegangen</strong>
-      <div class="text-caption mb-2">Hangouts</div>
-    </v-timeline-item>
-    <v-timeline-item dot-color="green">
-      <strong>Angelegt</strong>
-      <div class="text-caption mb-2">Hangouts</div>
-    </v-timeline-item>
-    <v-timeline-item dot-color="yellow">
-      <strong>Gepackt</strong>
-      <div class="text-caption mb-2">Hangouts</div>
-    </v-timeline-item>
-    <v-timeline-item dot-color="blue">
-      <strong>Erledigt</strong>
-      <div class="text-caption mb-2">Hangouts</div>
-    </v-timeline-item>
-  </v-timeline>
+  <v-main>
+    <h1>{{ title }}</h1>
+    <v-btn @click="removeFirstState()">Remove first</v-btn>
+    <v-btn @click="removeLastState()">Remove Last</v-btn>
+
+    <div v-for="(state, stateIndex) in states" :key="stateIndex">
+      <span>{{ state.name }}</span>
+      <span>{{ state.color }}</span>
+      <v-icon v-if="state.icon">{{ state.icon }}</v-icon>
+      <span>{{ state.icon }}</span>
+    </div>
+
+    <v-timeline
+      single-side="after"
+      :direction="direction"
+      density="compact"
+      truncate-line="both"
+    >
+      <v-timeline-item
+        v-for="(state, stateIndex) in states"
+        :key="stateIndex"
+        :dot-color="state.color"
+        align-dot="start"
+        fill-dot
+        large
+      >
+        <template v-slot:icon>
+          <v-btn
+            class="ma-2"
+            text
+            icon
+            :color="state.color"
+            @click="onStateClick(state)"
+          >
+            <v-icon v-if="state.icon">{{ state.icon }}</v-icon>
+          </v-btn>
+        </template>
+        <strong>{{ state.name }}</strong>
+        <div class="text-caption mb-2">{{ state.icon }}</div>
+        <span>{{ state.color }}</span>
+        <v-icon v-if="state.icon">{{ state.icon }}</v-icon>
+      </v-timeline-item>
+    </v-timeline>
+  </v-main>
 </template>
 <script setup lang="ts">
-const props = defineProps(["title"]);
+import { reactive, ref } from "vue";
+import type { State } from "../../interfaces/state.interface";
+import { MOCK_STATES } from "../../model/mock-states.";
+
+const props = defineProps<{
+  title: string;
+  direction: "horizontal" | "vertical";
+  states: State[];
+}>();
+
+const states = ref<State[]>(MOCK_STATES);
+
+const removeFirstState = () => {
+  states.value[0].icon = states.value[1].icon;
+  states.value.splice(0, 1);
+};
+
+const removeLastState = () => {
+  states.value.pop();
+};
+
+const expandableState = reactive<State>({
+  name: "Mehr",
+  color: "grey",
+  icon: "mdi-dots-horizontal",
+});
+
+const maxSize = ref(5);
+const expandableStatePosition = 2;
+
+const onStateClick = (state: State) => {
+  if (state === expandableState) {
+    console.log("expand");
+    expandStateTimeline();
+  } else {
+    console.log("clicked on " + state.name);
+  }
+};
+
+const expandStateTimeline = () => {
+  maxSize.value = props.states.length;
+};
 </script>
-
-<!---
-<template>
-  <WelcomeItem>
-    <template #icon> </template>
-    <template #heading>Documentation</template>
-
-    Vue’s
-    <a target="_blank" href="https://vuejs.org/">official documentation</a>
-    provides you with all information you need to get started.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon> </template>
-    <template #heading>Tooling</template>
-
-    This project is served and bundled with
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">Vite</a>.
-    The recommended IDE setup is
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a> +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>.
-    If you need to test your components and web pages, check out
-    <a href="https://www.cypress.io/" target="_blank">Cypress</a> and
-    <a
-      href="https://docs.cypress.io/guides/component-testing/introduction"
-      target="_blank"
-      >Cypress Component Testing</a
-    >.
-
-    <br />
-
-    More instructions are available in <code>README.md</code>.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon> </template>
-    <template #heading>Ecosystem</template>
-
-    Get official tools and libraries for your project:
-    <a target="_blank" href="https://pinia.vuejs.org/">Pinia</a>,
-    <a target="_blank" href="https://router.vuejs.org/">Vue Router</a>,
-    <a target="_blank" href="https://test-utils.vuejs.org/">Vue Test Utils</a>,
-    and
-    <a target="_blank" href="https://github.com/vuejs/devtools">Vue Dev Tools</a
-    >. If you need more resources, we suggest paying
-    <a target="_blank" href="https://github.com/vuejs/awesome-vue"
-      >Awesome Vue</a
-    >
-    a visit.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon> </template>
-    <template #heading>Community</template>
-
-    Got stuck? Ask your question on
-    <a target="_blank" href="https://chat.vuejs.org">Vue Land</a>, our official
-    Discord server, or
-    <a target="_blank" href="https://stackoverflow.com/questions/tagged/vue.js"
-      >StackOverflow</a
-    >. You should also subscribe to
-    <a target="_blank" href="https://news.vuejs.org">our mailing list</a> and
-    follow the official
-    <a target="_blank" href="https://twitter.com/vuejs">@vuejs</a>
-    twitter account for latest news in the Vue world.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon> </template>
-    <template #heading>Support Vue</template>
-
-    As an independent project, Vue relies on community backing for its
-    sustainability. You can help us by
-    <a target="_blank" href="https://vuejs.org/sponsor/">becoming a sponsor</a>.
-  </WelcomeItem>
-</template>-->
+<style>
+div.v-timeline-divider__line {
+  background-color: black;
+  height: 3px !important;
+}
+</style>

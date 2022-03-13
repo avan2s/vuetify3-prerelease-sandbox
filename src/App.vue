@@ -6,7 +6,7 @@
     <v-main>
       <h1>Lets drive a car</h1>
       <car-table></car-table>
-      <h1>Statusverlauf Parent</h1>
+      <!-- <h1>Statusverlauf Parent</h1>
       <v-timeline :direction="'horizontal'" density="compact">
         <v-timeline-item
           v-for="(state, stateIndex) in states"
@@ -17,13 +17,18 @@
           <strong>{{ state.name }}</strong>
           <div class="text-caption mb-2">Hangouts</div>
         </v-timeline-item>
-      </v-timeline>
+      </v-timeline> -->
       <v-container>
-        <status-timeline
-          title="Statusverlauf as child Own component"
+        <my-timeline
+          :states="MOCK_STATES"
+          direction="horizontal"
+          title="MyTimeline"
+        ></my-timeline>
+        <!-- <status-timeline
+          title="Statustimeline"
           direction="horizontal"
           :states="states"
-        ></status-timeline>
+        ></status-timeline> -->
       </v-container>
     </v-main>
   </v-app>
@@ -35,6 +40,7 @@ import StatusTimeline from "./components/timeline/StatusTimeline.vue";
 import { MOCK_STATES } from "./model/mock-states.";
 import CarTable from "./components/table/CarTable.vue";
 import ConSidebarContent from "./components/ConSidebarContent.vue";
+import MyTimeline from "./components/timeline/MyTimeline.vue";
 
 const states = ref(MOCK_STATES);
 </script>
